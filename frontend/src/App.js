@@ -11,7 +11,7 @@ const App = () => {
       <main>
         <Container>
           <Row>
-            <Col className='text-center py-3'>
+            <Col className='py-3'>
               <HomeScreen />
             </Col>
           </Row>
