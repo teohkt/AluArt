@@ -1,6 +1,8 @@
+import { Container, Row, Col } from 'react-bootstrap'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Container, Row, Col } from 'react-bootstrap'
+import HomeScreen from './screens/HomeScreen'
 
 const App = () => {
   return (
@@ -10,7 +12,7 @@ const App = () => {
         <Container>
           <Row>
             <Col className='text-center py-3'>
-              <h1>Can Aluminum Decor</h1>
+              <HomeScreen />
             </Col>
           </Row>
         </Container>
