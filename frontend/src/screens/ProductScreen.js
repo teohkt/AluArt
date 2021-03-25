@@ -13,7 +13,7 @@ const ProductScreen = (props) => {
   const [ product, setProduct ] = useState([])
   useEffect(()=>{
     const fetchProduct = async () => {
-      const prod = await axios.get(`/api/products/${props.match.params.id}`)
+      const prod = await axios.get(`/api/product/${props.match.params.id}`)
       setProduct(prod.data)
     }
     fetchProduct()
@@ -39,6 +39,7 @@ const ProductScreen = (props) => {
                 rating={product.rating}
                 text={`${product.numReviews} reviews`}
               />
+              {console.log(product)}
             </ListGroup.Item>
             <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
             <ListGroup.Item>Description: {product.description}</ListGroup.Item>
