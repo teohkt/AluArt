@@ -8,12 +8,13 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Rating from '../components/Rating'
 import { listProductDetails } from '../actions/productActions'
+import { addToCart } from '../actions/cartAction'
 
 const ProductScreen = (props) => {
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(1)
   const dispatch = useDispatch()
   const productDetails = useSelector(state => state.productDetails)
-  const { loading, error, product } = productDetails // productList is from store
+  const { loading, error, product } = productDetails 
 
 
   useEffect(()=> {
@@ -21,7 +22,8 @@ const ProductScreen = (props) => {
   }, [dispatch, props.match])
 
   const addToCartHandler = () => {
-    props.history.push(`/cart/${props.match.params.id}?qty=${qty}`)
+    dispatch(addToCart(props.match.params.id, qty))
+    props.history.push(`/cart`)
   }
   return (
     <>

@@ -2,8 +2,7 @@ import axios from 'axios'
 import { CART_ADD_ITEM } from '../constants/cartConstants'
 
 export const addToCart = (id, qty) =>async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/products/${id}`)
-
+    const { data } = await axios.get(`/api/product/${id}`)
     dispatch({
         type: CART_ADD_ITEM,
         payload: {
@@ -17,5 +16,5 @@ export const addToCart = (id, qty) =>async (dispatch, getState) => {
     })
 
     //can only save strings in local storage, need to stringify json response
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+    // localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
