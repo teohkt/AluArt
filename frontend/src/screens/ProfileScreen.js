@@ -5,7 +5,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
 
 const ProfileScreen = (props) => {
   const [name, setName] = useState('')
@@ -17,11 +17,13 @@ const ProfileScreen = (props) => {
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { loading, error, user } = userDetails
+  const { loading, user } = userDetails
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-  console.log(userInfo)
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const { success, error } = userUpdateProfile
 
   useEffect(() => {
     if (!userInfo) {
@@ -42,7 +44,7 @@ const ProfileScreen = (props) => {
       setMessage('Passwords do not match')
       // console.log('passwords dont match')
     } else {
-      // Dispatch Update Profile
+      dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
 
@@ -52,6 +54,7 @@ const ProfileScreen = (props) => {
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
+        {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
@@ -78,6 +81,7 @@ const ProfileScreen = (props) => {
               type='password'
               placeholder='Enter Password'
               value={password}
+              autoComplete='off'
               onChange={(e) => setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
@@ -87,6 +91,7 @@ const ProfileScreen = (props) => {
               type='password'
               placeholder='Re-enter Password'
               value={confirmPassword}
+              autoComplete='off'
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>

@@ -44,6 +44,7 @@ const LoginScreen = (props) => {
           <Form.Control
             type='email'
             placeholder='Enter Email'
+            autoComplete='username'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
@@ -53,6 +54,7 @@ const LoginScreen = (props) => {
           <Form.Control
             type='password'
             placeholder='Enter Password'
+            autoComplete='current-password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
