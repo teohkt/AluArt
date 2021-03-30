@@ -7,6 +7,8 @@ import Message from '../components/Message'
 
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+
 const ProfileScreen = (props) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -32,11 +34,16 @@ const ProfileScreen = (props) => {
       if (!user.name) {
         dispatch(getUserDetails('profile'))
       } else {
-        setName(user.name)
-        setEmail(user.email)
+        if (!user || !user.name || success) {
+          dispatch({ type: USER_UPDATE_PROFILE_RESET })
+          dispatch(getUserDetails('profile'))
+        } else {
+          setName(user.name)
+          setEmail(user.email)
+        }
       }
     }
-  }, [props.history, dispatch, userInfo, user])
+  }, [props.history, dispatch, userInfo, user, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
