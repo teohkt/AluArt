@@ -32,7 +32,6 @@ const CartScreen = ({ match, location, history }) => {
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
-                {console.log(item)}
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
