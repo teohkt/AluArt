@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CART_EMPTY } from '../constants/cartConstants'
 import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
@@ -107,6 +108,10 @@ export const payOrder = (orderId, paymentResult) => async (
     dispatch({
       type: ORDER_PAY_SUCCESS,
       payload: data,
+    })
+
+    dispatch({
+      type: CART_EMPTY,
     })
   } catch (error) {
     dispatch({
