@@ -140,7 +140,6 @@ export const listUserOrder = () => async (dispatch, getState) => {
       },
     }
     const { data } = await axios.get(`/api/order/myorders`, config)
-    console.log(data)
 
     dispatch({
       type: ORDER_LIST_USER_SUCCESS,

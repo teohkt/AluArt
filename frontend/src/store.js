@@ -20,7 +20,7 @@ import {
   orderListUserReducer,
 } from './reducers/orderReducers'
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
@@ -34,6 +34,14 @@ const reducer = combineReducers({
   orderListUser: orderListUserReducer,
 })
 
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    const { routing } = state
+    state = { routing }
+  }
+  return appReducer(state, action)
+}
+
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
@@ -44,7 +52,13 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
   ? JSON.parse(localStorage.getItem('shippingAddress'))
-  : {}
+  : {
+      address: '',
+      city: '',
+      postalCode: '',
+      country: '',
+      phoneNumber: '',
+    }
 
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
   ? JSON.parse(localStorage.getItem('paymentMethod'))
@@ -62,7 +76,7 @@ const initialState = {
 const middleware = [thunk]
 
 const store = createStore(
-  reducer,
+  rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )

@@ -2,7 +2,6 @@ import axios from 'axios'
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
-  USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -53,11 +52,12 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
+  localStorage.removeItem('__paypal_storage__')
+  localStorage.removeItem('paymentMethod')
+  localStorage.removeItem('shippingAddress')
+  document.location.href = '/login'
   dispatch({
     type: USER_LOGOUT,
-  })
-  dispatch({
-    type: USER_DETAILS_RESET,
   })
 }
 

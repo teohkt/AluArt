@@ -36,7 +36,6 @@ export const cartReducer = (
       }
     case CART_EMPTY:
       return {
-        ...state,
         cartItems: [],
       }
     case CART_SAVE_SHIPPING_ADDRESS:
