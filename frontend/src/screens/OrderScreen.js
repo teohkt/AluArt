@@ -10,6 +10,7 @@ import Loader from '../components/Loader'
 
 import { getOrderDetails, payOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { userLoginReducer } from '../reducers/userReducers'
 
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id
@@ -22,6 +23,9 @@ const OrderScreen = ({ match }) => {
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo: userInfo } = userLogin
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -42,15 +46,19 @@ const OrderScreen = ({ match }) => {
       document.body.appendChild(script)
     }
 
-    if (!order || order._id !== orderId || successPay) {
-      dispatch({ type: ORDER_PAY_RESET })
-      dispatch(getOrderDetails(orderId))
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript()
-      } else {
-        setSdkReady(true)
+    if (userInfo) {
+      if (!order || order._id !== orderId || successPay) {
+        dispatch({ type: ORDER_PAY_RESET })
+        dispatch(getOrderDetails(orderId))
+      } else if (!order.isPaid) {
+        if (!window.paypal) {
+          addPayPalScript()
+        } else {
+          setSdkReady(true)
+        }
       }
+    } else {
+      document.location.href = '/login'
     }
   }, [dispatch, order, orderId, successPay])
 
