@@ -4,3 +4,7 @@ main {
 .card-img-top {
   border-radius: 3px;
 }
+
+.nav-item {
+  margin-right: 0;
+}
