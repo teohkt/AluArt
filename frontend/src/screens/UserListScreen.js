@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
@@ -6,7 +6,7 @@ import { Table, Button } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-import { listUsers } from '../actions/userActions'
+import { listUsers, deleteUser } from '../actions/userActions'
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -17,15 +17,22 @@ const UserListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const userDelete = useSelector((state) => state.userDelete)
+  const { success: successDelete } = userDelete
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers())
     } else {
       history.push('/login')
     }
-  }, [dispatch])
+  }, [dispatch, history, userInfo, successDelete])
 
-  const deleteHandler = (id) => {}
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure?')) {
+      dispatch(deleteUser(id))
+    }
+  }
 
   return (
     <>
@@ -51,7 +58,7 @@ const UserListScreen = ({ history }) => {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>
-                  <a href={`mailto:${user._id}`}>{user._id}</a>
+                  <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
                 <td>
                   {user.isAdmin ? (

@@ -10,7 +10,6 @@ import Loader from '../components/Loader'
 
 import { getOrderDetails, payOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
-import { userLoginReducer } from '../reducers/userReducers'
 
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id
@@ -25,7 +24,7 @@ const OrderScreen = ({ match }) => {
   const { loading: loadingPay, success: successPay } = orderPay
 
   const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo: userInfo } = userLogin
+  const { userInfo } = userLogin
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -60,7 +59,7 @@ const OrderScreen = ({ match }) => {
     } else {
       document.location.href = '/login'
     }
-  }, [dispatch, order, orderId, successPay])
+  }, [dispatch, order, orderId, successPay, userInfo])
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult))
