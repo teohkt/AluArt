@@ -33,8 +33,8 @@ const App = () => {
               <Route path='/order/:id' component={OrderScreen} />
               <Route path='/product/:id' component={ProductScreen} />
               <Route path='/cart/:id?' component={CartScreen} />
-              <Route path='/admin/userList' component={UserListScreen} />
-              <Route path='/admin/user/:id' component={EditUserScreen} />
+              <Route path='/admin/userList/:id' component={EditUserScreen} />
+              <Route path='/admin/userList' exact component={UserListScreen} />
               <Route path='/' exact component={HomeScreen} />
             </Col>
           </Row>

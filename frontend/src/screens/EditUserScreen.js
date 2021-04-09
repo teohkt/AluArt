@@ -7,7 +7,8 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, userEdit } from '../actions/userActions'
+import { USER_EDIT_PROFILE_RESET } from '../constants/userConstants'
 
 const EditUserScreen = (props) => {
   const userId = props.match.params.id
@@ -20,18 +21,31 @@ const EditUserScreen = (props) => {
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
 
+  const editUser = useSelector((state) => state.userEditProfile)
+  const {
+    loading: loadingEdit,
+    error: errorEdit,
+    success: successEdit,
+  } = editUser
+
   useEffect(() => {
-    if (!user.name || user._id !== userId) {
-      dispatch(getUserDetails(userId))
+    if (successEdit) {
+      dispatch({ type: USER_EDIT_PROFILE_RESET })
+      props.history.push('/admin/userList')
     } else {
-      setName(user.name)
-      setEmail(user.email)
-      setIsAdmin(user.isAdmin)
+      if (!user.name || user._id !== userId) {
+        dispatch(getUserDetails(userId))
+      } else {
+        setName(user.name)
+        setEmail(user.email)
+        setIsAdmin(user.isAdmin)
+      }
     }
-  }, [dispatch, userId, user])
+  }, [dispatch, userId, user, successEdit, editUser, props.history])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(userEdit({ _id: userId, name, email, isAdmin }))
   }
 
   return (
@@ -41,6 +55,8 @@ const EditUserScreen = (props) => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingEdit && <Loader />}
+        {errorEdit && <Message variant='danger'>{errorEdit}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
