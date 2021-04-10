@@ -6,7 +6,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-import { listProducts } from '../actions/productActions'
+import { listProducts, deleteProduct } from '../actions/productActions'
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -17,19 +17,21 @@ const ProductListScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const productDelete = useSelector((state) => state.productDelete)
+  const { loading: loadingDelete, success: successDelete } = productDelete
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listProducts())
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, userInfo, successDelete])
 
   const createProductHandler = () => {}
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
-      // dispatch delete products
+      dispatch(deleteProduct(id))
     }
   }
 
