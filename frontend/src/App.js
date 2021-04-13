@@ -53,6 +53,7 @@ const App = () => {
                 exact
                 component={OrderListScreen}
               />
+              <Route path='/search/:keyword' component={HomeScreen} />
               <Route path='/' exact component={HomeScreen} />
             </Col>
           </Row>

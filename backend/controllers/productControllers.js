@@ -5,7 +5,16 @@ import Product from '../models/productModel.js'
 // @ route  GET /api/products
 // @ access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
+  //.query is used to get what is after the ? in the url
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+  const products = await Product.find({ ...keyword })
   // res.status(401)
   // throw new Error('Not Authorized')
   res.json(products)

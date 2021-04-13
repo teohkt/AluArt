@@ -161,7 +161,7 @@ const ProductScreen = (props) => {
                   )}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
-                      <Form.Group controllId='rating'>
+                      <Form.Group controlerlId='rating'>
                         <Form.Label>Rating</Form.Label>
                         <Form.Control
                           as='select'
@@ -176,7 +176,7 @@ const ProductScreen = (props) => {
                           <option value='5'>5 - Excellent</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controllId='comment'>
+                      <Form.Group controllerId='comment'>
                         <Form.Label>Comment</Form.Label>
                         <Form.Control
                           as='textarea'
