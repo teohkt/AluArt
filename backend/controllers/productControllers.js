@@ -5,6 +5,9 @@ import Product from '../models/productModel.js'
 // @ route  GET /api/products
 // @ access Public
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 6
+  const page = Number(req.query.pageNumber) || 1
+
   //.query is used to get what is after the ? in the url
   const keyword = req.query.keyword
     ? {
@@ -14,10 +17,14 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       }
     : {}
+
+  const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
   // res.status(401)
   // throw new Error('Not Authorized')
-  res.json(products)
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 // @ desc   Fetch single product
@@ -74,15 +81,7 @@ const createProductById = asyncHandler(async (req, res) => {
 // @ access Private/Admin
 const updateProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-  const {
-    name,
-    price,
-    description,
-    image,
-    brand,
-    category,
-    countInStock,
-  } = req.body
+  const { name, price, description, image, brand, category, countInStock } = req.body
 
   if (product) {
     product.name = name
@@ -111,9 +110,7 @@ const createProductReview = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body
 
   if (product) {
-    const alreadyReviewed = product.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    )
+    const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString())
 
     if (alreadyReviewed) {
       res.status(400)
@@ -127,9 +124,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     }
     product.reviews.push(review)
     product.numReviews = product.reviews.length
-    product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length
+    product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
 
     await product.save()
     res.status(201).json({ message: 'Review Added' })
@@ -139,11 +134,4 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 })
 
-export {
-  getProducts,
-  getProductById,
-  deleteProductById,
-  createProductById,
-  updateProductById,
-  createProductReview,
-}
+export { getProducts, getProductById, deleteProductById, createProductById, updateProductById, createProductReview }

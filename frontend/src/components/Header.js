@@ -28,7 +28,8 @@ const Header = () => {
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Route render={({ history }) => <SearchBox history={history} />} />
+            {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
+            <SearchBox />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
@@ -42,9 +43,7 @@ const Header = () => {
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
 
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <LinkContainer to='/login'>
