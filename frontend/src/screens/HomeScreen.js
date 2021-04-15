@@ -10,7 +10,10 @@ import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
 
 import Product from '../components/Product'
+
 import { listProducts } from '../actions/productActions'
+
+import { PRODUCT_DETAILS_RESET } from '../constants/productConstants'
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword
@@ -22,6 +25,7 @@ const HomeScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
+    dispatch({ type: PRODUCT_DETAILS_RESET })
   }, [dispatch, keyword, pageNumber])
 
   return (

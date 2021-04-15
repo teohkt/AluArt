@@ -27,11 +27,7 @@ const EditProductScreen = ({ match, history }) => {
   const { loading, product, error } = productDetails
 
   const productUpdate = useSelector((state) => state.productUpdate)
-  const {
-    loading: loadingUpdate,
-    success: successUpdate,
-    error: errorUpdate,
-  } = productUpdate
+  const { loading: loadingUpdate, success: successUpdate, error: errorUpdate } = productUpdate
 
   useEffect(() => {
     if (successUpdate) {
@@ -142,12 +138,7 @@ const EditProductScreen = ({ match, history }) => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
+              <Form.File id='image-file' label='Choose File' custom onChange={uploadFileHandler}></Form.File>
               {uploading && <Loader />}
             </Form.Group>
 

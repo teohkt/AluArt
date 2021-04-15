@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
@@ -7,6 +7,8 @@ import Meta from '../components/Meta'
 import Message from '../components/Message'
 
 import { addToCart, removeFromCart, cartEmpty } from '../actions/cartAction'
+
+import { PRODUCT_DETAILS_RESET } from '../constants/productConstants'
 
 const CartScreen = ({ match, location, history }) => {
   const dispatch = useDispatch()
@@ -23,6 +25,10 @@ const CartScreen = ({ match, location, history }) => {
   const emptyCartHandler = () => {
     dispatch(cartEmpty())
   }
+
+  useEffect(() => {
+    dispatch({ type: PRODUCT_DETAILS_RESET })
+  }, [dispatch])
 
   return (
     <Row>
