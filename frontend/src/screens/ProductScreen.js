@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 
+import Meta from '../components/Meta'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Rating from '../components/Rating'
-import {
-  listProductDetails,
-  createProductReview,
-} from '../actions/productActions'
+import { listProductDetails, createProductReview } from '../actions/productActions'
 import { addToCart } from '../actions/cartAction'
 
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
@@ -23,10 +21,7 @@ const ProductScreen = (props) => {
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
-  const {
-    success: successProductReview,
-    error: errorProductReview,
-  } = useSelector((state) => state.productReviewCreate)
+  const { success: successProductReview, error: errorProductReview } = useSelector((state) => state.productReviewCreate)
   const { userInfo } = useSelector((state) => state.userLogin)
 
   useEffect(() => {
@@ -64,6 +59,7 @@ const ProductScreen = (props) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={`Can - Alu | ${product.name}`} />
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.name} fluid />
@@ -74,15 +70,10 @@ const ProductScreen = (props) => {
                   <h3>{product.name}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Rating
-                    rating={product.rating}
-                    text={`${product.numReviews} reviews`}
-                  />
+                  <Rating rating={product.rating} text={`${product.numReviews} reviews`} />
                 </ListGroup.Item>
                 <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {product.description}
-                </ListGroup.Item>
+                <ListGroup.Item>Description: {product.description}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
@@ -98,9 +89,7 @@ const ProductScreen = (props) => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
-                    <Col>
-                      {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-                    </Col>
+                    <Col>{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</Col>
                   </Row>
                 </ListGroup.Item>
 
@@ -109,11 +98,7 @@ const ProductScreen = (props) => {
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
-                          value={qty}
-                          onChange={(e) => setQty(e.target.value)}
-                        >
+                        <Form.Control as='select' value={qty} onChange={(e) => setQty(e.target.value)}>
                           {[...Array(product.countInStock).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {' '}
@@ -156,18 +141,12 @@ const ProductScreen = (props) => {
                 ))}
                 <ListGroup.Item>
                   <h2>Write a customer review</h2>
-                  {errorProductReview && (
-                    <Message variant='danger'>{errorProductReview}</Message>
-                  )}
+                  {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlerlId='rating'>
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
-                          value={rating}
-                          onChange={(e) => setRating(e.target.value)}
-                        >
+                        <Form.Control as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
                           <option value=''>Select...</option>
                           <option value='1'>1 - Poor</option>
                           <option value='2'>2 - Fair</option>
