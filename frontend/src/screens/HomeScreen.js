@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import Meta from '../components/Meta'
 import Loader from '../components/Loader'
@@ -26,8 +27,21 @@ const HomeScreen = ({ match }) => {
   return (
     <>
       <Meta />
-      {!keyword && <ProductCarousel />}
-      <h1>Latest Products</h1>
+      {!keyword ? (
+        <>
+          <ProductCarousel />
+          <h1>Latest Products</h1>
+        </>
+      ) : (
+        <>
+          {' '}
+          <Link to='/' className='btn btn-light'>
+            Go Back
+          </Link>
+          <h1>Search Results For: {keyword}</h1>
+        </>
+      )}
+
       {loading ? (
         <Loader />
       ) : error ? (
