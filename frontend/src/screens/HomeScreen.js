@@ -7,7 +7,7 @@ import Meta from '../components/Meta'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
-import ProductCarousel from '../components/ProductCarousel'
+import PopularCarousel from '../components/PopularCarousel'
 
 import Product from '../components/Product'
 
@@ -31,9 +31,10 @@ const HomeScreen = ({ match }) => {
   return (
     <>
       <Meta />
+      <h1>Popular Right Now</h1>
       {!keyword ? (
         <>
-          <ProductCarousel />
+          <PopularCarousel />
           <h1>Latest Products</h1>
         </>
       ) : (
