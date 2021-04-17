@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
 // @ route  GET /api/products
 // @ access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 6
+  const pageSize = 8
   const page = Number(req.query.pageNumber) || 1
 
   //.query is used to get what is after the ? in the url
@@ -66,7 +66,7 @@ const createProductById = asyncHandler(async (req, res) => {
     user: req.user._id,
     image: '/images/sample.jpg',
     brand: 'Sample brand',
-    category: 'Saple category',
+    category: 'Sample category',
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',

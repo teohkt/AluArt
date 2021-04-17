@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
 import PopularCarousel from '../components/PopularCarousel'
+import HomeJumbotron from '../components/HomeJumbotron'
 
 import Product from '../components/Product'
 
@@ -18,6 +19,8 @@ import { PRODUCT_DETAILS_RESET } from '../constants/productConstants'
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword
   const pageNumber = match.params.pageNumber || 1
+  console.log(pageNumber)
+  console.log(keyword)
 
   const [showCarousel, setShowCarousel] = useState(true)
   const [showSearchResults, setShowSearchResults] = useState(false)
@@ -29,7 +32,7 @@ const HomeScreen = ({ match }) => {
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
     dispatch({ type: PRODUCT_DETAILS_RESET })
-    if (pageNumber === 1 && !keyword) {
+    if (Number(pageNumber) === 1 && !keyword) {
       setShowCarousel(true)
     } else {
       setShowCarousel(false)
@@ -48,6 +51,7 @@ const HomeScreen = ({ match }) => {
 
       {showCarousel && (
         <>
+          <HomeJumbotron />
           <h1>Trending</h1>
           <PopularCarousel />
         </>
