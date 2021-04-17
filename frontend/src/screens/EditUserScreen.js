@@ -22,11 +22,7 @@ const EditUserScreen = (props) => {
   const { loading, error, user } = userDetails
 
   const editUser = useSelector((state) => state.userEditProfile)
-  const {
-    loading: loadingEdit,
-    error: errorEdit,
-    success: successEdit,
-  } = editUser
+  const { loading: loadingEdit, error: errorEdit, success: successEdit } = editUser
 
   useEffect(() => {
     if (successEdit) {
@@ -89,7 +85,7 @@ const EditUserScreen = (props) => {
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
-            <Button variant='primary' type='submit'>
+            <Button variant='dark' type='submit'>
               Update
             </Button>
           </Form>

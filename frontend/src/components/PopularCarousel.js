@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Row, Col } from 'react-bootstrap'
 
 import Loader from './Loader'
 import Message from './Message'
@@ -71,7 +72,14 @@ const ProductCarousel = (props) => {
         <div key={product._id} className='carouselContent'>
           <Link to={`/product/${product._id}`}>
             <img src={product.image} alt={product.name} />
-            <h3>{product.name}</h3>
+            <Row className='px-3 py-2'>
+              <Col md={9} className='px-0'>
+                <h5>{product.name}</h5>
+              </Col>
+              <Col md={3} className='px-0'>
+                <p>${product.price}</p>
+              </Col>
+            </Row>
           </Link>
         </div>
       ))}

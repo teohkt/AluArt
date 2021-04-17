@@ -37,12 +37,12 @@ main {
   color: var(--main-color);
 }
 
-a:hover {
-  text-decoration: none;
+a {
+  color: var(--main-color);
 }
 
-.card-img-top {
-  height: 100%;
+a:hover {
+  text-decoration: none;
 }
 
 .pagination {
@@ -60,6 +60,10 @@ a:hover {
 }
 .page-link:focus {
   box-shadow: none;
+}
+
+.card {
+  max-width: 400px;
 }
 
 .card-body {
@@ -148,4 +152,8 @@ select:focus {
 
 #addToCartButtonContainer {
   padding: 12px;
+}
+
+.alert-danger {
+  background: rgba(196, 65, 65, 0.644);
 }

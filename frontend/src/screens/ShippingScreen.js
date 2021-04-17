@@ -20,9 +20,7 @@ const ShippingScreen = ({ history }) => {
   const dispatch = useDispatch()
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(
-      saveShippingAddress({ address, city, postalCode, country, phoneNumber })
-    )
+    dispatch(saveShippingAddress({ address, city, postalCode, country, phoneNumber }))
     history.push('/payment')
   }
 
@@ -81,7 +79,7 @@ const ShippingScreen = ({ history }) => {
             onChange={(e) => setPhoneNumber(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='dark'>
           Continue
         </Button>
       </Form>

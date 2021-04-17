@@ -109,7 +109,7 @@ const ProfileScreen = (props) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Button variant='primary' type='submit'>
+          <Button variant='dark' type='submit'>
             Update
           </Button>
         </Form>
@@ -146,11 +146,7 @@ const ProfileScreen = (props) => {
                     )}
                   </td>
                   <td>
-                    {order.isDelivered ? (
-                      order.deliveredAt
-                    ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }} />
-                    )}
+                    {order.isDelivered ? order.deliveredAt : <i className='fas fa-times' style={{ color: 'red' }} />}
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>

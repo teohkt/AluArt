@@ -13,7 +13,7 @@ import { addToCart } from '../actions/cartAction'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 const ProductScreen = (props) => {
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
 
@@ -50,7 +50,7 @@ const ProductScreen = (props) => {
   return (
     <>
       <Link className='btn btn-dark my-3' to='/'>
-        Go Back
+        Main Page
       </Link>
       {loading ? (
         <Loader />

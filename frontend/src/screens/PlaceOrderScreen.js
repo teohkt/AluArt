@@ -17,9 +17,7 @@ const PlaceOrderScreen = ({ history }) => {
   }
 
   // Subtotal
-  cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  )
+  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
   // Shipping
   if (cart.itemsPrice > 300) {
     cart.shippingPrice = 0
@@ -32,9 +30,7 @@ const PlaceOrderScreen = ({ history }) => {
   }
   cart.shippingPrice = addDecimals(cart.shippingPrice)
   // Tax
-  cart.taxPrice = addDecimals(
-    (Number(cart.itemsPrice) + Number(cart.shippingPrice)) * 0.13
-  )
+  cart.taxPrice = addDecimals((Number(cart.itemsPrice) + Number(cart.shippingPrice)) * 0.13)
 
   // Total
   cart.totalPrice = addDecimals(Number(cart.itemsPrice) + Number(cart.taxPrice))
@@ -72,8 +68,7 @@ const PlaceOrderScreen = ({ history }) => {
               <h2>Shipping</h2>
               <p>
                 <strong>Address: </strong>
-                {cart.shippingAddress.address}, {cart.shippingAddress.city},{' '}
-                {cart.shippingAddress.postalCode},{' '}
+                {cart.shippingAddress.address}, {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},{' '}
                 {cart.shippingAddress.country}
               </p>
               <p>
@@ -96,20 +91,13 @@ const PlaceOrderScreen = ({ history }) => {
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
+                          <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
+                          <Link to={`/product/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -122,28 +110,28 @@ const PlaceOrderScreen = ({ history }) => {
         <Col md={4}>
           <Card>
             <ListGroup variant='flush'>
-              <ListGroup.Item>
+              <ListGroup.Item className='borderless-bottom'>
                 <h2>Order Summary</h2>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='borderless-bottom borderless-top'>
                 <Row>
                   <Col>Subtotal</Col>
                   <Col>${cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='borderless-bottom borderless-top'>
                 <Row>
                   <Col>Shipping</Col>
                   <Col>${cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='borderless-top'>
                 <Row>
                   <Col>Tax</Col>
                   <Col>${cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='borderless-bottom'>
                 <Row>
                   <Col>Total</Col>
                   <Col>${cart.totalPrice}</Col>
@@ -159,7 +147,7 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>
                 <Button
                   type='button'
-                  className='btn-block'
+                  className='btn-block btn-dark'
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >

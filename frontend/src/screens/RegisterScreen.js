@@ -21,9 +21,7 @@ const RegisterScreen = (props) => {
   const userRegister = useSelector((state) => state.userRegister)
   const { loading, error, userInfo } = userRegister
 
-  const redirect = props.location.search
-    ? props.location.search.split('=')[1]
-    : '/'
+  const redirect = props.location.search ? props.location.search.split('=')[1] : '/'
 
   useEffect(() => {
     if (userInfo) {
@@ -84,17 +82,14 @@ const RegisterScreen = (props) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button variant='primary' type='submit'>
+        <Button variant='dark' type='submit'>
           Register
         </Button>
       </Form>
 
       <Row className='py-3'>
         <Col>
-          Have an account?{' '}
-          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-            Login
-          </Link>
+          Have an account? <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
         </Col>
       </Row>
     </FormContainer>

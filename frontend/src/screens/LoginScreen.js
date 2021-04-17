@@ -59,7 +59,7 @@ const LoginScreen = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button variant='primary' type='submit'>
+        <Button variant='dark' type='submit'>
           Sign In
         </Button>
       </Form>

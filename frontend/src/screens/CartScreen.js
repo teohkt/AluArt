@@ -34,6 +34,9 @@ const CartScreen = ({ match, location, history }) => {
     <Row>
       <Meta title={`Can - Alu | Cart`} />
       <Col md={8}>
+        <Link className='btn btn-dark my-3' to='/'>
+          Continue Shopping
+        </Link>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
@@ -41,9 +44,12 @@ const CartScreen = ({ match, location, history }) => {
           </Message>
         ) : (
           <>
-            <Button type='button' variant='light' onClick={() => emptyCartHandler()}>
-              Empty Cart <i className='fas fa-trash'></i>
-            </Button>
+            <Row className='p-3'>
+              <Button type='button' variant='light' onClick={() => emptyCartHandler()}>
+                Empty Cart <i className='fas fa-trash'></i>
+              </Button>
+            </Row>
+
             <ListGroup variant='flush'>
               {cartItems.map((item) => (
                 <ListGroup.Item key={item.product}>
@@ -84,11 +90,22 @@ const CartScreen = ({ match, location, history }) => {
       <Col md={4}>
         <Card>
           <ListGroup variant='flush'>
+            <h2>Summary</h2>
             <ListGroup.Item>
-              <h2>Subtotal</h2>
-              <h3>({cartItems.reduce((accumulator, item) => accumulator + Number(item.qty), 0)}) items</h3>$
-              {cartItems.reduce((accumulator, item) => accumulator + item.qty * item.price, 0).toFixed(2)}
-              <Button type='button' className='btn-block' disabled={cartItems.length === 0} onClick={checkoutHandler}>
+              <Row style={{ 'justify-content': 'space-between', padding: '5px 15px' }}>
+                <h3>Items</h3>
+                {cartItems.reduce((accumulator, item) => accumulator + Number(item.qty), 0)}
+              </Row>
+              <Row style={{ 'justify-content': 'space-between', padding: '5px 15px' }}>
+                <h3> Subtotal</h3>$
+                {cartItems.reduce((accumulator, item) => accumulator + item.qty * item.price, 0).toFixed(2)}
+              </Row>
+              <Button
+                type='button'
+                className='btn-block btn-dark'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
                 Proceed to Checkout
               </Button>
             </ListGroup.Item>

@@ -29,7 +29,7 @@ const HomeScreen = ({ match }) => {
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
     dispatch({ type: PRODUCT_DETAILS_RESET })
-    if (pageNumber == 1 && !keyword) {
+    if (pageNumber === 1 && !keyword) {
       setShowCarousel(true)
     } else {
       setShowCarousel(false)
@@ -48,7 +48,7 @@ const HomeScreen = ({ match }) => {
 
       {showCarousel && (
         <>
-          <h1>Popular Right Now</h1>
+          <h1>Trending</h1>
           <PopularCarousel />
         </>
       )}
@@ -57,7 +57,7 @@ const HomeScreen = ({ match }) => {
         <>
           {' '}
           <Link to='/' className='btn btn-light'>
-            Go Back
+            Main Page
           </Link>
           <h1>Search Results For: {keyword}</h1>
         </>
@@ -69,7 +69,7 @@ const HomeScreen = ({ match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          {!keyword && <h1>Latest Products</h1>}
+          {!keyword && <h1>Latest</h1>}
 
           <Row>
             {products.map((product) => (
