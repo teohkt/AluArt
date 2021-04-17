@@ -69,12 +69,10 @@ const ProductCarousel = (props) => {
       id='topProductCarousel'
     >
       {products.map((product) => (
-        <div key={product._id}>
+        <div key={product._id} className='carouselContent'>
           <Link to={`/product/${product._id}`}>
-            <div id='carouselContent'>
-              <img src={product.image} alt={product.name} />
-              <h3>{product.name}</h3>
-            </div>
+            <img src={product.image} alt={product.name} />
+            <h3>{product.name}</h3>
           </Link>
         </div>
       ))}

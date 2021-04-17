@@ -17,7 +17,7 @@ const SearchBox = () => {
   }
 
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler} inline id='searchForm'>
       <Form.Control
         type='text'
         name='q'
@@ -26,7 +26,7 @@ const SearchBox = () => {
         className='mr-sm-2 ml-sm-5'
         value={keyword}
       ></Form.Control>
-      <Button type='submit' variant='outline-success' className='p-2'>
+      <Button type='submit' variant='outline-secondary' className='p-2'>
         Search
       </Button>
     </Form>

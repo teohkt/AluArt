@@ -31,9 +31,10 @@ const HomeScreen = ({ match }) => {
   return (
     <>
       <Meta />
-      <h1>Popular Right Now</h1>
+
       {!keyword ? (
         <>
+          <h1>Popular Right Now</h1>
           <PopularCarousel />
           <h1>Latest Products</h1>
         </>
