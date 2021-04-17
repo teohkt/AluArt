@@ -26,7 +26,6 @@ const ProductScreen = (props) => {
 
   useEffect(() => {
     if (successProductReview) {
-      alert('Review Submitted')
       setRating(0)
       setComment('')
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
@@ -50,7 +49,7 @@ const ProductScreen = (props) => {
   }
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link className='btn btn-dark my-3' to='/'>
         Go Back
       </Link>
       {loading ? (
@@ -68,17 +67,14 @@ const ProductScreen = (props) => {
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h3>{product.name}</h3>
+                  {product.category}
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Rating rating={product.rating} text={`${product.numReviews} reviews`} />
-                </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>Description: {product.description}</ListGroup.Item>
+                <ListGroup.Item>{product.description}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
               <Card>
-                <ListGroup.Item variant='flush'>
+                <ListGroup.Item className='borderless-bottom' variant='flush'>
                   <Row>
                     <Col>Price:</Col>
                     <Col>
@@ -86,7 +82,7 @@ const ProductScreen = (props) => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                <ListGroup.Item>
+                <ListGroup.Item className='borderless-top borderless-bottom'>
                   <Row>
                     <Col>Status:</Col>
                     <Col>{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</Col>
@@ -94,7 +90,7 @@ const ProductScreen = (props) => {
                 </ListGroup.Item>
 
                 {product.countInStock > 0 && (
-                  <ListGroup.Item>
+                  <ListGroup.Item className='borderless-top borderless-bottom'>
                     <Row>
                       <Col>Qty</Col>
                       <Col>
@@ -111,10 +107,11 @@ const ProductScreen = (props) => {
                   </ListGroup.Item>
                 )}
 
-                <ListGroup.Item>
+                <ListGroup.Item className='borderless-top' id='addToCartButtonContainer'>
                   <Button
                     className='btn-block'
                     type='button'
+                    variant='dark'
                     onClick={addToCartHandler}
                     disabled={product.countInStock === 0}
                   >
@@ -125,27 +122,39 @@ const ProductScreen = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
-              <h2>Reviews</h2>
+            <Col md={5} id='reviewsSection'>
+              <Row id='reviewsTitleRow'>
+                <h2>Reviews ({product.numReviews})</h2>
+                <Rating rating={product.rating} id='productPageRating' />
+              </Row>
+
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
               <ListGroup variant='flush'>
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
                     <strong>{review.name}</strong>
+                    <Row id='reviewSubtitle'>
+                      <Rating rating={review.rating} />
+                      <p>{review.createdAt.substring(0, 10)}</p>
+                    </Row>
 
-                    <Rating rating={review.rating} />
-
-                    <p>{review.createdAt.substring(0, 10)}</p>
                     <p>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
-                <ListGroup.Item>
-                  <h2>Write a customer review</h2>
-                  {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
-                  {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group controlerlId='rating'>
-                        <Form.Label>Rating</Form.Label>
+              </ListGroup>
+              <Row id='newReviewTitle'>
+                <h2>Write a customer review</h2>
+              </Row>
+              <ListGroup variant='flush'>
+                {/* <ListGroup.Item> */}
+                {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
+                {userInfo ? (
+                  <Form onSubmit={submitHandler}>
+                    <Form.Group as={Row} controlId='rating'>
+                      <Form.Label column sm='3'>
+                        Rating
+                      </Form.Label>
+                      <Col sm='9'>
                         <Form.Control as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
                           <option value=''>Select...</option>
                           <option value='1'>1 - Poor</option>
@@ -154,26 +163,31 @@ const ProductScreen = (props) => {
                           <option value='4'>4 - Very Good</option>
                           <option value='5'>5 - Excellent</option>
                         </Form.Control>
-                      </Form.Group>
-                      <Form.Group controllerId='comment'>
-                        <Form.Label>Comment</Form.Label>
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} controlId='comment'>
+                      <Form.Label column sm='3'>
+                        Comment
+                      </Form.Label>
+                      <Col sm='9'>
                         <Form.Control
                           as='textarea'
                           row='3'
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
-                      </Form.Group>
-                      <Button type='submit' variant='primary'>
-                        Submit
-                      </Button>
-                    </Form>
-                  ) : (
-                    <Message>
-                      Please <Link to='/login'>sign in</Link> to leave a review
-                    </Message>
-                  )}
-                </ListGroup.Item>
+                      </Col>
+                    </Form.Group>
+                    <Button type='submit' variant='dark'>
+                      Submit
+                    </Button>
+                  </Form>
+                ) : (
+                  <Message>
+                    Please <Link to='/login'>sign in</Link> to leave a review
+                  </Message>
+                )}
+                {/* </ListGroup.Item> */}
               </ListGroup>
             </Col>
           </Row>
