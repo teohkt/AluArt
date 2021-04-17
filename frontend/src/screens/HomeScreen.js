@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -19,6 +19,9 @@ const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword
   const pageNumber = match.params.pageNumber || 1
 
+  const [showCarousel, setShowCarousel] = useState(true)
+  const [showSearchResults, setShowSearchResults] = useState(false)
+
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, page, pages } = productList
@@ -26,19 +29,31 @@ const HomeScreen = ({ match }) => {
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
     dispatch({ type: PRODUCT_DETAILS_RESET })
+    if (pageNumber == 1 && !keyword) {
+      setShowCarousel(true)
+    } else {
+      setShowCarousel(false)
+    }
+
+    if (keyword) {
+      setShowSearchResults(true)
+    } else {
+      setShowSearchResults(false)
+    }
   }, [dispatch, keyword, pageNumber])
 
   return (
     <>
       <Meta />
 
-      {!keyword ? (
+      {showCarousel && (
         <>
           <h1>Popular Right Now</h1>
           <PopularCarousel />
-          <h1>Latest Products</h1>
         </>
-      ) : (
+      )}
+
+      {showSearchResults && (
         <>
           {' '}
           <Link to='/' className='btn btn-light'>
@@ -54,6 +69,8 @@ const HomeScreen = ({ match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          {!keyword && <h1>Latest Products</h1>}
+
           <Row>
             {products.map((product) => (
               <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
